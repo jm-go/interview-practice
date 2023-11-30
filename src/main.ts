@@ -14,6 +14,10 @@ if (!pageHeader || !cardContainer || !pokemonName || !searchButton) {
   throw new Error("Issue with the selector.");
 }
 
+// Extension: add some margin for button and input section
+pokemonName.style.marginTop = "0.7rem";
+searchButton.style.marginTop = "0.7rem";
+
 // Add function to create a card for the pokemon
 const addPokemonCard = (pokemon: Pokemon): HTMLElement => {
   // As types is an array, I need to convert it so string using join it first, otherwise it would be displayed with commas
