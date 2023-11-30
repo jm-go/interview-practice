@@ -1,16 +1,16 @@
 import "./styles/style.scss";
 import { pokemonArray } from "./data/pokemon";
-//import { Pokemon } from "./data/types";
 
 // Add selectors
 const pageHeader = document.querySelector<HTMLHeadingElement>("h1");
 const cardContainer = document.querySelector<HTMLElement>(".card-container");
-// Extension - add selectors for pokemon-name and search-button 
+// Extension - add selectors for pokemon-name and search-button
 const pokemonName = document.querySelector<HTMLInputElement>(".pokemon-name");
-const searchButton = document.querySelector<HTMLButtonElement>(".search-button");
+const searchButton =
+  document.querySelector<HTMLButtonElement>(".search-button");
 
-// Add error handling for selectors
-if (!pageHeader || !cardContainer) {
+// Add error handling for selectors and extension selectors
+if (!pageHeader || !cardContainer || !pokemonName || !searchButton) {
   throw new Error("Issue with the selector.");
 }
 
@@ -52,6 +52,7 @@ const addPokemonCard = (pokemon: Pokemon): HTMLElement => {
   return card;
 };
 
+// Loop through pokemonArray to create a new card for each element
 pokemonArray.forEach((pokemon) => {
   const card = addPokemonCard(pokemon);
   cardContainer.append(card);
@@ -59,3 +60,28 @@ pokemonArray.forEach((pokemon) => {
 
 // Extension: filter through the pokémon
 // Search by name functionality
+// This function filters the pokemonArray.
+// It returns pokemons which names include text given by user, i.e.
+// Search "bulb" - > bulbasaur will be displayed
+const searchPokemonByName = (name: string): Pokemon[] => {
+  return pokemonArray.filter((pokemon) => pokemon.name.includes(name));
+};
+
+// This function clears the card container to make space for pokemon cards chosen by user
+// It also appends cards for each Pokémon in the given array.
+const displayPokemonByName = (pokemon: Pokemon[]) => {
+  cardContainer.textContent = "";
+  pokemon.forEach((pokemon) => {
+    const card = addPokemonCard(pokemon);
+    cardContainer.append(card);
+  });
+};
+
+// The event listener for button click. It retrieves user's input from pokemonName input element.
+// Then, when user clicks the button, it searches for matching pokemons using searchPokemonByName function.
+// Finally, it displays the results using the displayPokemonByName function.
+searchButton.addEventListener("click", () => {
+  const newPokemon = pokemonName.value;
+  const displayedPokemon = searchPokemonByName(newPokemon);
+  displayPokemonByName(displayedPokemon);
+});
