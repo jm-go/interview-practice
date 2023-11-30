@@ -5,6 +5,9 @@ import { pokemonArray } from "./data/pokemon";
 // Add selectors
 const pageHeader = document.querySelector<HTMLHeadingElement>("h1");
 const cardContainer = document.querySelector<HTMLElement>(".card-container");
+// Extension - add selectors for pokemon-name and search-button 
+const pokemonName = document.querySelector<HTMLInputElement>(".pokemon-name");
+const searchButton = document.querySelector<HTMLButtonElement>(".search-button");
 
 // Add error handling for selectors
 if (!pageHeader || !cardContainer) {
@@ -53,3 +56,6 @@ pokemonArray.forEach((pokemon) => {
   const card = addPokemonCard(pokemon);
   cardContainer.append(card);
 });
+
+// Extension: filter through the pokémon
+// Search by name functionality
